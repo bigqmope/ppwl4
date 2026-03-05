@@ -37,8 +37,25 @@ const app = new Elysia()
     query: t.Object({
       sort: t.Union([t.Literal("asc"), t.Literal("desc")]),
     }),
-  }
-)
+  })
+
+  // PRAKTIKUM 3
+  .get(
+  "/stats",
+  () => {
+    return {
+      total: 100,
+      active: 72,
+    };
+  },
+  {
+    response: t.Object({
+      total: t.Number(),
+      active: t.Number(),
+    }),
+  })
+
+  
   .listen(3000);
 
 
