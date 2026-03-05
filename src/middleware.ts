@@ -1,14 +1,27 @@
 import { Elysia } from "elysia";
 import { openapi } from "@elysiajs/openapi";
 
+
 const app = new Elysia()
   .use(openapi())
+
 
 // Global Logger
 app.onRequest(({ request }) => {
   console.log("📥", request.method, request.url)
   console.log("🕒", new Date().toISOString())
 })
+
+
+  // PRAKTIKUM 6
+  app.onAfterHandle(({ response }) => {
+  return {
+    success: true,
+    Message: "data tersedia",
+    data: response
+  }
+})
+
 
 // PRAKTIKUM 5 - beforeHandle
 app.get(
@@ -28,6 +41,13 @@ app.get(
     }
   }
 )
+
+
+  app.get("/product", () => ({
+  id: 1,
+  name: "Laptop"
+}))
+
 
 app.listen(3000)
 console.log("Server running at http://localhost:3000")
