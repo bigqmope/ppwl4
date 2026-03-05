@@ -3,6 +3,7 @@ import { openapi } from "@elysiajs/openapi";
 
 const app = new Elysia()
   .use(openapi())
+  // PRAKTIKUM 1
   .post("/request",
     ({ body }) => {
       return {
@@ -18,6 +19,26 @@ const app = new Elysia()
       })
     }
   )
+
+  // PRAKTIKUM 2
+  .get(
+  "/products/:id",
+  ({ params, query }) => {
+    return {
+      message: "Success",
+      productId: params.id,
+      sort: query.sort,
+    };
+  },
+  {
+    params: t.Object({
+      id: t.Number(),
+    }),
+    query: t.Object({
+      sort: t.Union([t.Literal("asc"), t.Literal("desc")]),
+    }),
+  }
+)
   .listen(3000);
 
 
